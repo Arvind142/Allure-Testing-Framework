@@ -1,0 +1,48 @@
+<configuration>
+
+    <!-- Console Appender -->
+    <appender name="console-appender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender -->
+    <appender name="file-appender" class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <file>logs/trace.log</file>
+        <append>false</append>
+    </appender>
+
+    <appender name="html-appender" class="ch.qos.logback.core.FileAppender">
+        <file>logs/html_logs.html</file>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <charset>UTF-8</charset>
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>%d{HH:mm:ss.SSS}%thread%level%logger%line%msg</pattern>
+            </layout>
+        </encoder>
+        <append>false</append>
+    </appender>
+
+    <!-- testng logger to skip unnecessary logs -->
+
+    <logger name="org.testng" level="WARN">
+        <appender-ref ref="console-appender" />
+        <appender-ref ref="file-appender" />
+    </logger>
+
+    <logger name="io.netty" level="OFF" />
+    <logger name="org.apache" level="OFF" />
+    <logger name="org.asynchttpclient.netty" level="OFF" />
+    <logger name="io.github.bonigarcia.wdm" level="WARN" />
+
+    <root level="TRACE">
+        <appender-ref ref="console-appender" />
+        <appender-ref ref="file-appender" />
+        <appender-ref ref="html-appender" />
+    </root>
+
+</configuration>
