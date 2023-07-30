@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Logback Log Messages</title>
+<style  type="text/css">
+table { margin-left: 2em; margin-right: 2em; border-left: 2px solid #AAA; }
+TR.even { background: #FFFFFF; }
+TR.odd { background: #EAEAEA; }
+TR.warn TD.Level, TR.error TD.Level, TR.fatal TD.Level {font-weight: bold; color: #FF4040 }
+TD { padding-right: 1ex; padding-left: 1ex; border-right: 2px solid #AAA; }
+TD.Time, TD.Date { text-align: right; font-family: courier, monospace; font-size: smaller; }
+TD.Thread { text-align: left; }
+TD.Level { text-align: right; }
+TD.Logger { text-align: left; }
+TR.header { background: #596ED5; color: #FFF; font-weight: bold; font-size: larger; }
+TD.Exception { background: #A2AEE8; font-family: courier, monospace;}
+</style>
+
+  </head>
+<body>
+<hr/>
+<p>Log session start time Sun Jul 30 18:24:34 IST 2023</p><p></p>
+
+<table cellspacing="0">
+<tr class="header">
+<td class="Date">Date</td>
+<td class="Thread">Thread</td>
+<td class="Level">Level</td>
+<td class="Logger">Logger</td>
+<td class="LineOfCaller">LineOfCaller</td>
+<td class="Message">Message</td>
+</tr>
+
+
+<tr class="trace even">
+<td class="Date">18:24:41.699</td>
+<td class="Thread">main</td>
+<td class="Level">TRACE</td>
+<td class="Logger">io.github.arvind142.framework.framework.listeners.TestListener</td>
+<td class="LineOfCaller">37</td>
+<td class="Message">onStart</td>
+</tr>
+
+<tr class="trace odd">
+<td class="Date">18:24:42.085</td>
+<td class="Thread">main</td>
+<td class="Level">TRACE</td>
+<td class="Logger">io.github.arvind142.framework.framework.listeners.TestListener</td>
+<td class="LineOfCaller">13</td>
+<td class="Message">onTestStart</td>
+</tr>
+
+<tr class="trace even">
+<td class="Date">18:24:43.195</td>
+<td class="Thread">main</td>
+<td class="Level">TRACE</td>
+<td class="Logger">io.github.arvind142.framework.framework.listeners.TestListener</td>
+<td class="LineOfCaller">21</td>
+<td class="Message">onTestFailure</td>
+</tr>
+
+<tr class="trace odd">
+<td class="Date">18:24:43.250</td>
+<td class="Thread">main</td>
+<td class="Level">TRACE</td>
+<td class="Logger">io.github.arvind142.framework.framework.listeners.TestListener</td>
+<td class="LineOfCaller">13</td>
+<td class="Message">onTestStart</td>
+</tr>
+
+<tr class="trace even">
+<td class="Date">18:24:43.318</td>
+<td class="Thread">main</td>
+<td class="Level">TRACE</td>
+<td class="Logger">io.github.arvind142.framework.framework.listeners.TestListener</td>
+<td class="LineOfCaller">17</td>
+<td class="Message">onTestSuccess</td>
+</tr>
+
+<tr class="trace odd">
+<td class="Date">18:24:43.367</td>
+<td class="Thread">main</td>
+<td class="Level">TRACE</td>
+<td class="Logger">io.github.arvind142.framework.framework.listeners.TestListener</td>
+<td class="LineOfCaller">41</td>
+<td class="Message">onFinish</td>
+</tr>

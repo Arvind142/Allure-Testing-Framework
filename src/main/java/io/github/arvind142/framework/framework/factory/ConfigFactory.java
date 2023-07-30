@@ -1,6 +1,6 @@
-package io.github.arvind142.framework.factory;
+package io.github.arvind142.framework.framework.factory;
 
-import io.github.arvind142.framework.constants.FrameworkConstants;
+import io.github.arvind142.framework.framework.constants.ConfigConstants;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
@@ -14,12 +14,12 @@ public class ConfigFactory implements Cloneable {
     Yaml yaml = new Yaml();
 
     private ConfigFactory() {
-        executionConfig = loadConfig(FrameworkConstants.executionPropertyPath);
-        envConfig = loadConfig(FrameworkConstants.envPropertyPath(executionConfig.getProperty("Environment")));
-        browserConfig = loadConfig(FrameworkConstants.browserPropertyPath);
+        executionConfig = loadConfig(ConfigConstants.executionPropertyPath);
+        envConfig = loadConfig(ConfigConstants.envPropertyPath(executionConfig.getProperty("Environment")));
+        browserConfig = loadConfig(ConfigConstants.browserPropertyPath);
     }
 
-    public static void init() {
+    private static void init() {
         if (configFactory == null) {
             synchronized (ConfigFactory.class) {
                 configFactory = new ConfigFactory();
@@ -28,14 +28,17 @@ public class ConfigFactory implements Cloneable {
     }
 
     public static Properties getExecutionProperties() {
+        init();
         return (Properties) configFactory.executionConfig.clone();
     }
 
     public static Properties getEnvironmentProperties() {
+        init();
         return (Properties) configFactory.envConfig.clone();
     }
 
     public static Properties getBrowserProperties() {
+        init();
         return (Properties) configFactory.browserConfig.clone();
     }
 
