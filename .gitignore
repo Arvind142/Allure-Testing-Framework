@@ -39,4 +39,6 @@ build/
 
 .idea/
 
+### Result folders ###
 allure-results/
+test-output/

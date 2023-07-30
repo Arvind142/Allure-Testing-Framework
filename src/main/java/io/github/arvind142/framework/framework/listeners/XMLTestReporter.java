@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Java class is copy-pasted as we need testng-results.xml in test-output to different location,
+ * @see XMLTestReporter#generateReport(List, List, String)#Line38
+ */
 public class XMLTestReporter extends XMLReporter {
 
     /**

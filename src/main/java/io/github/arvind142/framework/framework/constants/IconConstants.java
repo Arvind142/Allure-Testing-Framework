@@ -1,10 +1,31 @@
 package io.github.arvind142.framework.framework.constants;
 
-public class IconConstants {
-    public static final String ICON_SMILEY_PASS = "<i class='fa fa-smile-o' style='font-size:24px'></i>";
-    public static final String ICON_SMILEY_SKIP = "<i class=\"fas fa-frown-open\"></i>";
-    public static final String ICON_SMILEY_FAIL = "<i class='fa fa-frown-o' style='font-size:24px'></i>";
+import com.aventstack.extentreports.Status;
 
+public class IconConstants {
+
+    public static class TestStatus{
+        public static final String pass = "<i class='fa-regular fa-circle-check' style='font-size:24px'></i>";
+        public static final String fail = "<i class='fa-regular fa-circle-xmark' style='font-size:24px'></i>";
+        public static final String others = "<i class='fa-regular fa-circle-question' style='font-size:24px'></i>";
+
+        private TestStatus(){}
+
+        public String getStatusIcon(Status status){
+            switch (status){
+                case PASS:{
+                    return pass;
+                }
+                case FAIL:{
+                    return fail;
+                }
+                default:{
+                    return others;
+                }
+            }
+        }
+
+    }
     public static final String ICON_Navigate_Right = "<i class='fa fa-arrow-circle-right' ></i>";
     public static final String ICON_LAPTOP = "<i class='fa fa-laptop' style='font-size:18px'></i>";
     public static final String ICON_BUG = "<i class='fa fa-bug' ></i>";
@@ -38,6 +59,7 @@ public class IconConstants {
         private static final String chrome = prefix + "chrome" + suffix;
         private static final String edge = prefix + "edge" + suffix;
         private static final String firefox = prefix + "firefox" + suffix;
+        private static final String window = prefix + "window-maximize" + suffix;
 
         private Browser() {
         }
@@ -50,8 +72,9 @@ public class IconConstants {
                 return firefox;
             } else if (browserName.contains("edge")) {
                 return edge;
+            }else{
+                return window;
             }
-            return browserName;
         }
     }
 }
