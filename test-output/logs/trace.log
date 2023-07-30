@@ -1,6 +1,0 @@
-18:24:41.699 [main] TRACE i.g.a.f.f.listeners.TestListener - onStart
-18:24:42.085 [main] TRACE i.g.a.f.f.listeners.TestListener - onTestStart
-18:24:43.195 [main] TRACE i.g.a.f.f.listeners.TestListener - onTestFailure
-18:24:43.250 [main] TRACE i.g.a.f.f.listeners.TestListener - onTestStart
-18:24:43.318 [main] TRACE i.g.a.f.f.listeners.TestListener - onTestSuccess
-18:24:43.367 [main] TRACE i.g.a.f.f.listeners.TestListener - onFinish
