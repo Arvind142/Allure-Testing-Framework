@@ -1,6 +1,7 @@
 package io.github.arvind142.framework.framework.factory;
 
 import io.github.arvind142.framework.framework.constants.ConfigConstants;
+import io.github.arvind142.framework.framework.utils.CommonUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
 
@@ -72,16 +73,12 @@ public class ConfigFactory implements Cloneable {
      */
     public Properties readAndReplacePropertyValues(Properties properties){
         for(Object key:properties.keySet()){
-            String systemPropertyValue=System.getProperty(String.valueOf(key));
-            if(!isNullOrEmpty(systemPropertyValue)){
+            String systemPropertyValue=System.getenv(String.valueOf(key));
+            if(!CommonUtility.isNullOrEmpty(systemPropertyValue)){
                 log.trace("{} key has value {} will be replaced with env value {}",key,properties.get(key),systemPropertyValue);
                 properties.replace(key,systemPropertyValue);
             }
         }
         return properties;
-    }
-
-    private boolean isNullOrEmpty(Object o){
-        return o == null || (String.valueOf(o).trim().equalsIgnoreCase(""));
     }
 }

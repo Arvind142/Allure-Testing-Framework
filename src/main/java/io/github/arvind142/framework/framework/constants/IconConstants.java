@@ -5,13 +5,13 @@ import com.aventstack.extentreports.Status;
 public class IconConstants {
 
     public static class TestStatus{
-        public static final String pass = "<i class='fa-regular fa-circle-check' style='font-size:24px'></i>";
-        public static final String fail = "<i class='fa-regular fa-circle-xmark' style='font-size:24px'></i>";
-        public static final String others = "<i class='fa-regular fa-circle-question' style='font-size:24px'></i>";
+        private static final String pass = "<i class='fa fa-check'></i>";
+        private static final String fail = "<i class='fa fa-cross'></i>";
+        private static final String others = "<i class='fa fa-question'></i>";
 
         private TestStatus(){}
 
-        public String getStatusIcon(Status status){
+        public static String getStatusIcon(Status status){
             switch (status){
                 case PASS:{
                     return pass;
@@ -24,12 +24,7 @@ public class IconConstants {
                 }
             }
         }
-
     }
-    public static final String ICON_Navigate_Right = "<i class='fa fa-arrow-circle-right' ></i>";
-    public static final String ICON_LAPTOP = "<i class='fa fa-laptop' style='font-size:18px'></i>";
-    public static final String ICON_BUG = "<i class='fa fa-bug' ></i>";
-
     private IconConstants() {
     }
 
@@ -55,7 +50,7 @@ public class IconConstants {
 
     public static class Browser {
         private static final String prefix = "<i class='fa fa-";
-        private static final String suffix = "' aria-hidden='true'></i>";
+        private static final String suffix = "'></i>";
         private static final String chrome = prefix + "chrome" + suffix;
         private static final String edge = prefix + "edge" + suffix;
         private static final String firefox = prefix + "firefox" + suffix;

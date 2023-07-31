@@ -3,16 +3,26 @@ package io.github.arvind142.framework.framework.reporter;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.CodeLanguage;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.model.Media;
+import io.github.arvind142.framework.framework.annotation.TestInfo;
+import io.github.arvind142.framework.framework.constants.FrameworkConstants;
+import io.github.arvind142.framework.framework.utils.CommonUtility;
+import lombok.extern.slf4j.Slf4j;
+import org.testng.ITest;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 public class TestReporter {
     private static ThreadLocal<ExtentTest> extentTestThreadLocal = new ThreadLocal<>();
 
@@ -34,6 +44,13 @@ public class TestReporter {
                                 getTestDescription(result)
                         )
                 );
+        setAuthor(result);
+        setCategory(result);
+        setDependentInformation(result);
+    }
+
+    public static void assignDevice(String device){
+        extentTestThreadLocal.get().assignDevice(device);
     }
 
     public static void flushReporting(ITestContext iTestContext){
@@ -49,6 +66,9 @@ public class TestReporter {
 
     public static void log(Status status,String message){
         extentTestThreadLocal.get().log(status,message);
+    }
+    public static void log(Status status, Markup markup){
+        extentTestThreadLocal.get().log(status,markup);
     }
 
     public static void logCode(Status status,String message){
@@ -111,15 +131,75 @@ public class TestReporter {
     }
 
     private static String getTestDescription(ITestResult iTestResult){
-        return "";
+        String annotationTestDescription=null,annotationTestName=null;
+        String testName = getTestName(iTestResult);
+        try {
+            annotationTestName = iTestResult.getMethod().getConstructorOrMethod().getMethod()
+                    .getAnnotation(TestInfo.class).testDescription();
+            annotationTestName=annotationTestName.equals(FrameworkConstants.notApplicable)?null:annotationTestName;
+
+            annotationTestDescription = iTestResult.getMethod().getConstructorOrMethod().getMethod()
+                    .getAnnotation(TestInfo.class).testDescription();
+            annotationTestDescription=annotationTestDescription.equals(FrameworkConstants.notApplicable)?null:annotationTestDescription;
+
+            String description="";
+            if(!CommonUtility.isNullOrEmpty(annotationTestName)){
+                description+="<b>Test Name: </b>"+annotationTestName;
+            }
+            if(!CommonUtility.isNullOrEmpty(annotationTestDescription)){
+                description+="<br />"+"<b>Test Description:</b>"+annotationTestDescription;
+            }
+            description=description.replace(" ","&nbsp;");
+            return description;
+        }
+        catch(Exception e) {
+            log.warn("@TestDescription is not used with "+testName);
+            return null;
+        }
+     }
+
+    private static void setAuthor(ITestResult iTestResult){
+        String author=null;
+        String testName = getTestName(iTestResult);
+        try{
+            author = iTestResult.getMethod().getConstructorOrMethod().getMethod()
+                    .getAnnotation(TestInfo.class).author();
+            author=author.equals(FrameworkConstants.notApplicable)?null:author;
+            author=author.replace(" ","&nbsp;");
+            if(author!=null){
+                extentTestThreadLocal.get().assignAuthor(author);
+            }
+        }catch(Exception e) {
+            log.warn("@TestDescription is not used with "+testName);
+        }
     }
 
-    private static String getAuthor(ITestResult iTestResult){
-        return "";
+    private static void setCategory(ITestResult iTestResult){
+        String[] category = iTestResult.getMethod().getConstructorOrMethod().getMethod()
+                .getAnnotation(Test.class).groups();
+        category=category.length==0?null:category;
+        if(category!=null){
+            extentTestThreadLocal.get().assignCategory(category);
+        }
     }
 
-    private static String[] getCategory(ITestResult iTestResult){
-        return new String[]{""};
+    private static void setDependentInformation(ITestResult result){
+        String[] dependsOnMethod = result.getMethod().getConstructorOrMethod().getMethod()
+                .getAnnotation(Test.class).dependsOnMethods();
+        dependsOnMethod=dependsOnMethod.length==0?null:dependsOnMethod;
+
+        String[] dependsOnGroup = result.getMethod().getConstructorOrMethod().getMethod()
+                .getAnnotation(Test.class).dependsOnGroups();
+        dependsOnGroup=dependsOnGroup.length==0?null:dependsOnGroup;
+
+        if(dependsOnGroup!=null || dependsOnMethod!=null){
+            if(dependsOnMethod!=null){
+                log(Status.INFO,MarkupHelper.createLabel("TestCase was dependent on method/s "+Arrays.toString(dependsOnMethod)+"", ExtentColor.GREEN));
+            }
+            if(dependsOnGroup!=null){
+                log(Status.INFO,MarkupHelper.createLabel("TestCase was dependent on group/s "+Arrays.toString(dependsOnGroup)+"", ExtentColor.GREEN));
+            }
+        }
     }
 
     private static synchronized void setTriggerDetails(ITestContext context){
