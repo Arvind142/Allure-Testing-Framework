@@ -9,6 +9,7 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.model.Media;
 import io.github.arvind142.framework.framework.annotation.TestInfo;
 import io.github.arvind142.framework.framework.constants.FrameworkConstants;
+import io.github.arvind142.framework.framework.constants.HTMLConstants;
 import io.github.arvind142.framework.framework.utils.CommonUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.ITest;
@@ -131,26 +132,19 @@ public class TestReporter {
     }
 
     private static String getTestDescription(ITestResult iTestResult){
-        String annotationTestDescription=null,annotationTestName=null;
+        String annotationTestDescription=null;
+        String[] annotationTestName=null;
         String testName = getTestName(iTestResult);
         try {
             annotationTestName = iTestResult.getMethod().getConstructorOrMethod().getMethod()
-                    .getAnnotation(TestInfo.class).testDescription();
+                    .getAnnotation(TestInfo.class).testName();
             annotationTestName=annotationTestName.equals(FrameworkConstants.notApplicable)?null:annotationTestName;
 
             annotationTestDescription = iTestResult.getMethod().getConstructorOrMethod().getMethod()
                     .getAnnotation(TestInfo.class).testDescription();
             annotationTestDescription=annotationTestDescription.equals(FrameworkConstants.notApplicable)?null:annotationTestDescription;
 
-            String description="";
-            if(!CommonUtility.isNullOrEmpty(annotationTestName)){
-                description+="<b>Test Name: </b>"+annotationTestName;
-            }
-            if(!CommonUtility.isNullOrEmpty(annotationTestDescription)){
-                description+="<br />"+"<b>Test Description:</b>"+annotationTestDescription;
-            }
-            description=description.replace(" ","&nbsp;");
-            return description;
+            return HTMLConstants.ResultHtml.getTestDescription(annotationTestName,annotationTestDescription);
         }
         catch(Exception e) {
             log.warn("@TestDescription is not used with "+testName);

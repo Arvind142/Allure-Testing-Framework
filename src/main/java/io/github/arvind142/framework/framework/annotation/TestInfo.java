@@ -15,7 +15,7 @@ public @interface TestInfo {
 
     String[] category() default {};
 
-    String[] testName() default {};
+    String[] testName();
 
     String testDescription() default FrameworkConstants.notApplicable;
 }

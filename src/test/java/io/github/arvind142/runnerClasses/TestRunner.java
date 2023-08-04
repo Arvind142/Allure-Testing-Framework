@@ -22,7 +22,7 @@ public class TestRunner extends TestBase {
 
     @Test
     @Flaky
-    @TestInfo(author = "Arvind Choudhary")
+    @TestInfo(author = "Arvind Choudhary", testName = {"Test2","TEst3"})
     public void test2() {
         DriverBuilder.init();
         assertEquals(0, 0);
@@ -31,7 +31,7 @@ public class TestRunner extends TestBase {
 
     @Test
     @Flaky
-    @TestInfo(author = "Arvind Choudhary")
+    @TestInfo(author = "Arvind Choudhary", testName = "Test3",testDescription = "abc")
     public void test3() {
         DriverBuilder.init();
         throw new SkipException("Skip");
