@@ -19,7 +19,7 @@ public class XMLTestReporter extends XMLReporter {
     @Override
     public void generateReport(
             List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
-        getConfig().setOutputDirectory(ReportingConstants.resultOutputFolder);
+        getConfig().setOutputDirectory(ReportingConstants.RESULT_OUTPUT_FOLDER);
         if (Utils.isStringEmpty(getConfig().getOutputDirectory())) {
             getConfig().setOutputDirectory(outputDirectory);
         }

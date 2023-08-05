@@ -11,11 +11,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface TestInfo {
 
-    String author() default FrameworkConstants.notApplicable;
+    String author() default FrameworkConstants.NOT_APPLICABLE;
 
     String[] category() default {};
 
     String[] testName();
 
-    String testDescription() default FrameworkConstants.notApplicable;
+    String testDescription() default FrameworkConstants.NOT_APPLICABLE;
 }

@@ -19,11 +19,11 @@ public class ConfigFactory implements Cloneable {
     private ConfigFactory() {
         log.trace("Constructor called");
         log.trace("reading executionConfig");
-        executionConfig = loadConfig(ConfigConstants.executionPropertyPath);
+        executionConfig = loadConfig(ConfigConstants.EXECUTION_PROPERTY_PATH);
         log.trace("reading environmentConfig");
         envConfig = loadConfig(ConfigConstants.envPropertyPath(executionConfig.getProperty("Environment")));
         log.trace("reading browserConfig");
-        browserConfig = loadConfig(ConfigConstants.browserPropertyPath);
+        browserConfig = loadConfig(ConfigConstants.BROWSER_PROPERTY_PATH);
     }
 
     private static void init() {
@@ -80,5 +80,9 @@ public class ConfigFactory implements Cloneable {
             }
         }
         return properties;
+    }
+
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

@@ -19,17 +19,16 @@ class Reporter {
 
     private Reporter(){
         log.debug("HTML Reporter called");
-        String reportingFolder = ReportingConstants.resultOutputFolder;
+        reportingFolder = ReportingConstants.RESULT_OUTPUT_FOLDER;
         log.debug("Output folder created @ "+reportingFolder);
         // creating screenshot folder
-        String assetFolder = ReportingConstants.screenshotFolder;
+        String assetFolder = ReportingConstants.SCREENSHOT_FOLDER;
         File folder = new File(assetFolder);
         log.debug((folder.mkdirs() ? "screenshot folder created" : "screenshot folder creation failed"));
         log.debug("Asset folder created @ " + folder.getAbsolutePath());
 
         // reporting initialized
-        htmlReporter = new ExtentSparkReporter(reportingFolder + ReportingConstants.htmlReportName);
-        this.reportingFolder = reportingFolder;
+        htmlReporter = new ExtentSparkReporter(reportingFolder + ReportingConstants.HTML_REPORT_NAME);
         extentReport = new ExtentReports();
         // attach reporter :)
         extentReport.attachReporter(htmlReporter);

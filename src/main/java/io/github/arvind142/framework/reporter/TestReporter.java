@@ -142,7 +142,7 @@ public class TestReporter {
 
             annotationTestDescription = iTestResult.getMethod().getConstructorOrMethod().getMethod()
                     .getAnnotation(TestInfo.class).testDescription();
-            annotationTestDescription=annotationTestDescription.equals(FrameworkConstants.notApplicable)?null:annotationTestDescription;
+            annotationTestDescription=annotationTestDescription.equals(FrameworkConstants.NOT_APPLICABLE)?null:annotationTestDescription;
 
             return HTMLConstants.ResultHtml.getTestDescription(annotationTestName,annotationTestDescription);
         }
@@ -158,7 +158,7 @@ public class TestReporter {
         try{
             author = iTestResult.getMethod().getConstructorOrMethod().getMethod()
                     .getAnnotation(TestInfo.class).author();
-            author=author.equals(FrameworkConstants.notApplicable)?null:author;
+            author=author.equals(FrameworkConstants.NOT_APPLICABLE)?null:author;
             author=author.replace(" ","&nbsp;");
             if(author!=null){
                 extentTestThreadLocal.get().assignAuthor(author);
