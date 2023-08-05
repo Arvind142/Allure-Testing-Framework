@@ -1,6 +1,6 @@
-package io.github.arvind142.framework.framework.annotation;
+package io.github.arvind142.framework.annotation;
 
-import io.github.arvind142.framework.framework.constants.FrameworkConstants;
+import io.github.arvind142.framework.constants.FrameworkConstants;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

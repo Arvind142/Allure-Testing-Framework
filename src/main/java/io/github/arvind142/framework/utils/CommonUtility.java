@@ -1,4 +1,4 @@
-package io.github.arvind142.framework.framework.utils;
+package io.github.arvind142.framework.utils;
 
 public class CommonUtility {
 

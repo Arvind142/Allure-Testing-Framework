@@ -1,19 +1,15 @@
-package io.github.arvind142.framework.framework.reporter;
+package io.github.arvind142.framework.reporter;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.model.Test;
-import io.github.arvind142.framework.framework.constants.ReportingConstants;
+import io.github.arvind142.framework.constants.ReportingConstants;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j

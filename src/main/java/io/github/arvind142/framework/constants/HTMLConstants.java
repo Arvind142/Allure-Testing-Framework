@@ -1,6 +1,4 @@
-package io.github.arvind142.framework.framework.constants;
-
-import io.github.arvind142.framework.framework.utils.CommonUtility;
+package io.github.arvind142.framework.constants;
 
 public class HTMLConstants {
     public static final class ResultHtml{
@@ -18,13 +16,14 @@ public class HTMLConstants {
         private static final String boldOpening = "<b>";
         private static final String boldClosing = "</b>";
         public static String getTestDescription(String[] testName,String testDescription){
-            String nameTag = detailsOpening+summaryOpening+boldOpening+"Name (Click To Expand) ⬇️⬇️⬇️ "+boldClosing+summaryClosing+paragraphOpening+ulOpening;
+            StringBuilder builder= new StringBuilder();
+            builder.append(detailsOpening+summaryOpening+boldOpening+"Name (Click To Expand) ⬇️⬇️⬇️ "+boldClosing+summaryClosing+paragraphOpening+ulOpening);
             for(String test:testName){
-                nameTag+=liOpening+boldOpening+"Test Name: "+boldClosing+test+liClosing;
+                builder.append(liOpening+boldOpening+"Test Name: "+boldClosing+test+liClosing);
             }
-            nameTag+=ulClosing+paragraphClosing+detailsClosing;
+            builder.append(ulClosing+paragraphClosing+detailsClosing);
             String descriptionTag = detailsOpening+summaryOpening+boldOpening+"Description (Click To Expand) ⬇️⬇️⬇️ "+boldClosing+summaryClosing + (paragraphOpening + testDescription + paragraphClosing + detailsClosing);
-            return (nameTag+descriptionTag).replace(" ","&nbsp;");
+            return (builder+descriptionTag).replace(" ","&nbsp;");
         }
     }
 }

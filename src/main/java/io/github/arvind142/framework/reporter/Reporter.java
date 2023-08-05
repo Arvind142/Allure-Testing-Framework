@@ -1,8 +1,8 @@
-package io.github.arvind142.framework.framework.reporter;
+package io.github.arvind142.framework.reporter;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import io.github.arvind142.framework.framework.constants.ReportingConstants;
+import io.github.arvind142.framework.constants.ReportingConstants;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -18,8 +18,8 @@ class Reporter {
     private String reportingFolder="";
 
     private Reporter(){
-        String reportingFolder = ReportingConstants.resultOutputFolder;
         log.debug("HTML Reporter called");
+        String reportingFolder = ReportingConstants.resultOutputFolder;
         log.debug("Output folder created @ "+reportingFolder);
         // creating screenshot folder
         String assetFolder = ReportingConstants.screenshotFolder;

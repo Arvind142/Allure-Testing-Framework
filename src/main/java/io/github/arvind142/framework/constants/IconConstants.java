@@ -1,4 +1,4 @@
-package io.github.arvind142.framework.framework.constants;
+package io.github.arvind142.framework.constants;
 
 import com.aventstack.extentreports.Status;
 

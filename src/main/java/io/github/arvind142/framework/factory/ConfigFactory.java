@@ -1,7 +1,7 @@
-package io.github.arvind142.framework.framework.factory;
+package io.github.arvind142.framework.factory;
 
-import io.github.arvind142.framework.framework.constants.ConfigConstants;
-import io.github.arvind142.framework.framework.utils.CommonUtility;
+import io.github.arvind142.framework.constants.ConfigConstants;
+import io.github.arvind142.framework.utils.CommonUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
 
@@ -56,9 +56,9 @@ public class ConfigFactory implements Cloneable {
      */
     public Properties loadConfig(String path) {
         Properties properties = new Properties();
-        try {
-            System.out.println("trying to load " + path);
-            properties.load(new FileInputStream(path));
+        try(FileInputStream inputStream = new FileInputStream(path)) {
+            log.trace("trying to load " + path);
+            properties.load(inputStream);
         } catch (Exception e) {
             properties = new Properties();
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class ConfigFactory implements Cloneable {
      * @return
      */
     public Properties readAndReplacePropertyValues(Properties properties){
-        for(Object key:properties.keySet()){
+        for(Object key:properties.entrySet()){
             String systemPropertyValue=System.getenv(String.valueOf(key));
             if(!CommonUtility.isNullOrEmpty(systemPropertyValue)){
                 log.trace("{} key has value {} will be replaced with env value {}",key,properties.get(key),systemPropertyValue);

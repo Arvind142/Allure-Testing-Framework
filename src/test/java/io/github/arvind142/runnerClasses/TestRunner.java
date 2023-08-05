@@ -1,36 +1,40 @@
 package io.github.arvind142.runnerClasses;
 
 import io.github.arvind142.base.TestBase;
-import io.github.arvind142.framework.framework.annotation.TestInfo;
-import io.github.arvind142.framework.framework.builder.DriverBuilder;
+import io.github.arvind142.framework.annotation.TestInfo;
+import io.github.arvind142.framework.builder.DriverBuilder;
 import io.qameta.allure.Flaky;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.testng.SkipException;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 public class TestRunner extends TestBase {
 
-    @Test(description = "MyTest")
-    @Severity(SeverityLevel.MINOR)
-    public void test() {
-        DriverBuilder.init();
-        assertEquals("2", "3");
+    @DataProvider(name = "dp")
+    public Object[][] dp(){
+        return new Object[][]{
+                {"1","1"},
+                {"2","0"},
+                {"3","3"}
+        };
     }
 
-    @Test
-    @Flaky
-    @TestInfo(author = "Arvind Choudhary", testName = {"Test2","TEst3"})
+    @Test(dataProvider = "dp")
+    public void test(String a,String b) {
+        assertEquals(a, b);
+    }
+
+    @Test(invocationCount = 2)
+//    @TestInfo(author = "Arvind Choudhary", testName = {"Test2","TEst3"})
     public void test2() {
-        DriverBuilder.init();
-        assertEquals(0, 0);
+        int a=0,b=3;
+        assertEquals(a, b);
     }
 
 
     @Test
-    @Flaky
     @TestInfo(author = "Arvind Choudhary", testName = "Test3",testDescription = "abc")
     public void test3() {
         DriverBuilder.init();

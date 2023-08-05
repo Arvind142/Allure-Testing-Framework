@@ -1,4 +1,4 @@
-package io.github.arvind142.framework.framework.reporter;
+package io.github.arvind142.framework.reporter;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -6,13 +6,10 @@ import com.aventstack.extentreports.markuputils.CodeLanguage;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.model.Media;
-import io.github.arvind142.framework.framework.annotation.TestInfo;
-import io.github.arvind142.framework.framework.constants.FrameworkConstants;
-import io.github.arvind142.framework.framework.constants.HTMLConstants;
-import io.github.arvind142.framework.framework.utils.CommonUtility;
+import io.github.arvind142.framework.annotation.TestInfo;
+import io.github.arvind142.framework.constants.FrameworkConstants;
+import io.github.arvind142.framework.constants.HTMLConstants;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.ITest;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
@@ -25,6 +22,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class TestReporter {
+    private TestReporter(){
+
+    }
     private static ThreadLocal<ExtentTest> extentTestThreadLocal = new ThreadLocal<>();
 
     private static Reporter reporter;
@@ -56,6 +56,7 @@ public class TestReporter {
 
     public static void flushReporting(ITestContext iTestContext){
         reporter.flushReporting();
+        extentTestThreadLocal.remove();
     }
 
     /*
@@ -134,11 +135,10 @@ public class TestReporter {
     private static String getTestDescription(ITestResult iTestResult){
         String annotationTestDescription=null;
         String[] annotationTestName=null;
-        String testName = getTestName(iTestResult);
+        String testName = (iTestResult.getMethod().getQualifiedName());
         try {
             annotationTestName = iTestResult.getMethod().getConstructorOrMethod().getMethod()
                     .getAnnotation(TestInfo.class).testName();
-            annotationTestName=annotationTestName.equals(FrameworkConstants.notApplicable)?null:annotationTestName;
 
             annotationTestDescription = iTestResult.getMethod().getConstructorOrMethod().getMethod()
                     .getAnnotation(TestInfo.class).testDescription();
@@ -154,7 +154,7 @@ public class TestReporter {
 
     private static void setAuthor(ITestResult iTestResult){
         String author=null;
-        String testName = getTestName(iTestResult);
+        String testName = iTestResult.getMethod().getQualifiedName();
         try{
             author = iTestResult.getMethod().getConstructorOrMethod().getMethod()
                     .getAnnotation(TestInfo.class).author();
