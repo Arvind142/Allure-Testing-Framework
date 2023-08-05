@@ -25,12 +25,12 @@ public class TestReporter {
     private TestReporter(){
 
     }
-    private static ThreadLocal<ExtentTest> extentTestThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<ExtentTest> extentTestThreadLocal = new ThreadLocal<>();
 
     private static Reporter reporter;
 
 
-    private static Map<String,Integer> listOfTCs = new ConcurrentHashMap<>();
+    private static final Map<String,Integer> listOfTCs = new ConcurrentHashMap<>();
 
     public static void init(ITestContext iTestContext){
         reporter = Reporter.init();
@@ -57,6 +57,7 @@ public class TestReporter {
     public static void flushReporting(ITestContext iTestContext){
         reporter.flushReporting();
         extentTestThreadLocal.remove();
+        log.trace("EndTime: {}",iTestContext.getEndDate());
     }
 
     /*
@@ -94,7 +95,7 @@ public class TestReporter {
         List<String> paramString = getParameter(iTestResult);
         if(!paramString.isEmpty()){
             // returning test name
-            testName=(testName + " - [ " + paramString.stream().toArray()[0]+" ]");
+            testName=(testName + " - [ " + paramString.toArray()[0]+" ]");
         }
 
         // is test invoked again?
@@ -133,8 +134,8 @@ public class TestReporter {
     }
 
     private static String getTestDescription(ITestResult iTestResult){
-        String annotationTestDescription=null;
-        String[] annotationTestName=null;
+        String annotationTestDescription;
+        String[] annotationTestName;
         String testName = (iTestResult.getMethod().getQualifiedName());
         try {
             annotationTestName = iTestResult.getMethod().getConstructorOrMethod().getMethod()
@@ -153,16 +154,13 @@ public class TestReporter {
      }
 
     private static void setAuthor(ITestResult iTestResult){
-        String author=null;
+        String author;
         String testName = iTestResult.getMethod().getQualifiedName();
         try{
             author = iTestResult.getMethod().getConstructorOrMethod().getMethod()
                     .getAnnotation(TestInfo.class).author();
-            author=author.equals(FrameworkConstants.NOT_APPLICABLE)?null:author;
             author=author.replace(" ","&nbsp;");
-            if(author!=null){
-                extentTestThreadLocal.get().assignAuthor(author);
-            }
+            extentTestThreadLocal.get().assignAuthor(author);
         }catch(Exception e) {
             log.warn("@TestDescription is not used with "+testName);
         }
@@ -188,10 +186,10 @@ public class TestReporter {
 
         if(dependsOnGroup!=null || dependsOnMethod!=null){
             if(dependsOnMethod!=null){
-                log(Status.INFO,MarkupHelper.createLabel("TestCase was dependent on method/s "+Arrays.toString(dependsOnMethod)+"", ExtentColor.GREEN));
+                log(Status.INFO,MarkupHelper.createLabel("TestCase was dependent on method/s "+Arrays.toString(dependsOnMethod), ExtentColor.GREEN));
             }
             if(dependsOnGroup!=null){
-                log(Status.INFO,MarkupHelper.createLabel("TestCase was dependent on group/s "+Arrays.toString(dependsOnGroup)+"", ExtentColor.GREEN));
+                log(Status.INFO,MarkupHelper.createLabel("TestCase was dependent on group/s "+Arrays.toString(dependsOnGroup), ExtentColor.GREEN));
             }
         }
     }

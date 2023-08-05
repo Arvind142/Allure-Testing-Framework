@@ -3,18 +3,15 @@ package io.github.arvind142.framework.factory;
 import io.github.arvind142.framework.constants.ConfigConstants;
 import io.github.arvind142.framework.utils.CommonUtility;
 import lombok.extern.slf4j.Slf4j;
-import org.yaml.snakeyaml.Yaml;
-
 import java.io.FileInputStream;
 import java.util.Properties;
 
 @Slf4j
-public class ConfigFactory implements Cloneable {
+public class ConfigFactory{
     private static ConfigFactory configFactory;
     private final Properties executionConfig;
     private final Properties browserConfig;
     private final Properties envConfig;
-    Yaml yaml = new Yaml();
 
     private ConfigFactory() {
         log.trace("Constructor called");
@@ -50,15 +47,16 @@ public class ConfigFactory implements Cloneable {
     }
 
     /**
-     * Read property file accepts proeprty file path
-     * @param path
-     * @return
+     * Read property file accepts property file path
+     * @param path path of proeprty file
+     * @return reading property object after .proprieties is read
      */
     public Properties loadConfig(String path) {
         Properties properties = new Properties();
         try(FileInputStream inputStream = new FileInputStream(path)) {
             log.trace("trying to load " + path);
             properties.load(inputStream);
+            properties = readAndReplacePropertyValues(properties);
         } catch (Exception e) {
             properties = new Properties();
             e.printStackTrace();
@@ -68,8 +66,8 @@ public class ConfigFactory implements Cloneable {
 
     /**
      * method will override property values if any env variables is set with same key
-     * @param properties
-     * @return
+     * @param properties props which has key & values
+     * @return Properties
      */
     public Properties readAndReplacePropertyValues(Properties properties){
         for(Object key:properties.entrySet()){
@@ -80,9 +78,5 @@ public class ConfigFactory implements Cloneable {
             }
         }
         return properties;
-    }
-
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 }
