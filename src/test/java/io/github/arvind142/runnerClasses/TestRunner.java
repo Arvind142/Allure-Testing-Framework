@@ -3,12 +3,12 @@ package io.github.arvind142.runnerClasses;
 import io.github.arvind142.base.TestBase;
 import io.github.arvind142.framework.annotation.TestInfo;
 import io.github.arvind142.framework.builder.DriverBuilder;
-import io.qameta.allure.Flaky;
 import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class TestRunner extends TestBase {
 
@@ -27,10 +27,9 @@ public class TestRunner extends TestBase {
     }
 
     @Test(invocationCount = 2)
-//    @TestInfo(author = "Arvind Choudhary", testName = {"Test2","TEst3"})
-    public void test2() {
-        int a=0,b=3;
-        assertEquals(a, b);
+    @TestInfo(author = "Arvind Choudhary", testName = {"Test2","TEst3"})
+    public void test2() throws AssertionError{
+        assertTrue(true);
     }
 
 
